@@ -248,7 +248,7 @@ const houses = ref<House[]>([])
 const isLoading = ref(true)
 
 const fetchHouses = async () => {
-  const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
   isLoading.value = true
   try {
     const response = await fetch(`${API_BASE}/api/worker/houses`)
