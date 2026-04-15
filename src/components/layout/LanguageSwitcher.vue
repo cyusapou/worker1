@@ -39,9 +39,9 @@ import {
   availableLocales, 
   getCurrentLocale, 
   setLocale, 
-  getLocaleInfo,
-  type LocaleCode
+  getLocaleInfo
 } from '../../i18n'
+import type { LocaleCode } from '../../i18n'
 
 const isOpen = ref(false)
 const switcherRef = ref<HTMLElement | null>(null)

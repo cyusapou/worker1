@@ -79,6 +79,7 @@ interface Breadcrumb {
 
 const route = useRoute()
 const sidebarCollapsed = ref(false)
+const isMobileMenuOpen = ref(false)
 
 // Global Synchronization Heartbeat
 useSync()

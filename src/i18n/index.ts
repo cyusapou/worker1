@@ -54,7 +54,7 @@ const i18n = createI18n({
   silentTranslationWarn: false, // Show missing translation warnings in development
   silentFallbackWarn: false,
   warnHtmlMessage: false,
-  missing: (locale, key) => {
+  missing: (locale: string, key: string) => {
     // Log missing translations in development
     if (import.meta.env.DEV) {
       console.warn(`Missing translation for key "${key}" in locale "${locale}"`)

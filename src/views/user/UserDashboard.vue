@@ -27,9 +27,9 @@
         <!-- Crisis Header - Debt Banner -->
         <div v-if="hasDebt" class="dashboard__crisis-header">
           <DebtBanner
-            :total-debt="debtInfo.totalDebt"
-            :weeks-owed="debtInfo.weeksOwed"
-            :months-behind="debtInfo.monthsBehind"
+            :total-debt="(debtInfo as any).totalDebt"
+            :weeks-owed="(debtInfo as any).weeksOwed"
+            :months-behind="(debtInfo as any).monthsBehind"
             @pay-now="openPaymentModal"
           />
         </div>
@@ -142,7 +142,7 @@
                   </div>
                   <div class="stat-item">
                     <span class="stat-label">Outstanding</span>
-                    <span class="stat-value amount">{{ formatCurrency(debtInfo.totalDebt, 'RWF') }}</span>
+                    <span class="stat-value amount">{{ formatCurrency((debtInfo as any).totalDebt, 'RWF') }}</span>
                   </div>
                 </div>
                 
@@ -229,7 +229,7 @@
       <PaymentConfirmModal
         v-model="showPaymentModal"
         :weeks="selectedWeeks"
-        @confirm="handlePaymentConfirm"
+        @confirm="(pin: any) => handlePaymentConfirm(pin)"
       />
 
       <!-- Mobile Payment Bottom Sheet -->
