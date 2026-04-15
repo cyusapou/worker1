@@ -376,6 +376,14 @@ const callCustomer = (house: House) => {
   flex-wrap: wrap;
 }
 
+@media (max-width: 768px) {
+  .page-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
 .page-top-left {
   display: flex;
   align-items: baseline;
@@ -430,6 +438,19 @@ const callCustomer = (house: House) => {
   font-size: 14px;
   color: #1e293b;
   transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+  .search-input {
+    width: 100%;
+  }
+  
+  .filter-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+  }
 }
 
 .search-input:focus {
@@ -488,6 +509,69 @@ const callCustomer = (house: House) => {
   overflow: hidden;
   transition: all 0.2s ease;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .house-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .house-row {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .house-info {
+    order: 1;
+    min-width: 0;
+    flex: 1;
+  }
+  
+  .house-status {
+    order: 0;
+  }
+  
+  .category-badge {
+    order: 2;
+    margin-left: auto;
+  }
+  
+  .house-amount {
+    order: 3;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    margin-top: 4px;
+  }
+  
+  .house-amount-label {
+    margin-left: 4px;
+  }
+  
+  .house-actions {
+    order: 4;
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .call-btn, .detail-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .house-expand {
+    display: none; /* Already handled by whole card click */
+  }
 }
 
 .house-card:hover {

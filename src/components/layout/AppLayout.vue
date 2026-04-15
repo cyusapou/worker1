@@ -11,8 +11,8 @@
       <!-- Page Content -->
       <main class="page-content">
         <div class="content-wrapper">
-          <!-- Page Header -->
-          <div class="page-header">
+          <!-- Page Header (Center align on mobile) -->
+          <div class="page-header" :class="{ 'page-header--mobile-hidden': isDashboard && isMobile }">
             <div class="page-header-content">
               <div class="page-title-section">
                 <h1 class="page-title">{{ pageTitle }}</h1>
@@ -61,6 +61,9 @@
         @click="closeMobileMenu"
       ></div>
     </Transition>
+
+    <!-- Mobile Navigation Bar -->
+    <MobileNav v-if="isMobile" />
   </div>
 </template>
 
@@ -70,7 +73,9 @@ import { useRoute } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import AppSidebar from './AppSidebar.vue'
 import AppHeader from './AppHeader.vue'
+import MobileNav from './MobileNav.vue'
 import { useSync } from '../../composables/useSync'
+import { useWindowSize } from '@vueuse/core'
 
 interface Breadcrumb {
   label: string
@@ -78,8 +83,12 @@ interface Breadcrumb {
 }
 
 const route = useRoute()
-const sidebarCollapsed = ref(false)
 const isMobileMenuOpen = ref(false)
+const sidebarCollapsed = ref(false)
+
+const { width } = useWindowSize()
+const isMobile = computed(() => width.value <= 768)
+const isDashboard = computed(() => route.path === '/dashboard')
 
 // Global Synchronization Heartbeat
 useSync()
@@ -157,8 +166,16 @@ onUnmounted(() => {
 /* Page Content */
 .page-content {
   flex: 1;
-  padding-top: 72px; /* Header height */
+  padding-top: 72px; /* Desktop Header height */
   overflow-y: auto;
+  transition: padding 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding-top: var(--mobile-header-height);
+    padding-bottom: calc(var(--mobile-nav-height) + var(--safe-area-bottom));
+  }
 }
 
 .content-wrapper {
@@ -169,7 +186,22 @@ onUnmounted(() => {
 
 /* Page Header */
 .page-header {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header--mobile-hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    text-align: center;
+    margin-top: 8px;
+  }
+  
+  .page-header--mobile-hidden {
+    display: none;
+  }
 }
 
 .page-header-content {

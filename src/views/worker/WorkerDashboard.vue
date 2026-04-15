@@ -623,10 +623,27 @@ const formatTime = (time: string) => {
   gap: var(--space-5);
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-6);
   border: 1px solid rgba(255,255,255,0.15);
   flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .welcome-stats {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    color: var(--color-primary-900);
+    width: 100%;
+    justify-content: space-around;
+  }
+  
+  .welcome-stat-value { color: var(--color-primary-900); }
+  .welcome-stat-label { color: var(--color-primary-700); }
+  .welcome-stat-divider { background: var(--color-primary-100); }
 }
 
 .welcome-stat {
@@ -1316,16 +1333,23 @@ const formatTime = (time: string) => {
 
 @media (max-width: 1024px) {
   .dashboard { padding: var(--space-5); }
-  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-  .dashboard-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .dashboard-grid { grid-template-columns: 1fr; gap: 16px; }
   .welcome-content { flex-direction: column; gap: var(--space-4); align-items: flex-start; }
-  .welcome-stats { width: 100%; justify-content: center; }
 }
 
 @media (max-width: 768px) {
-  .dashboard { padding: var(--space-4); }
-  .welcome-banner { padding: var(--space-5); }
+  .dashboard { padding: var(--space-4); padding-bottom: 32px; }
+  .welcome-banner { padding: var(--space-5); border-radius: 24px; }
   .welcome-title { font-size: var(--text-xl); }
+  .metric-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+  }
   .metric-sparkline { display: none; }
   .category-info { min-width: 140px; }
 }

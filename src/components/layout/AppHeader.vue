@@ -3,11 +3,10 @@
     <div class="header-container">
       <!-- Left Section -->
       <div class="header-left">
-        <button class="mobile-menu-toggle" @click="toggleMobileMenu">
-          <Icon icon="ph:list" />
-        </button>
-        
-        <div class="header-search">
+        <div class="header-logo-mobile" v-if="isMobile">
+          <div class="agruni-lettermark">A</div>
+        </div>
+        <div class="header-search" v-else>
           <div class="search-container">
             <Icon icon="ph:magnifying-glass" class="search-icon" />
             <input 
@@ -21,47 +20,38 @@
         </div>
       </div>
 
+      <!-- Mobile Center Title -->
+      <div class="header-center-mobile" v-if="isMobile">
+        <span class="mobile-title">{{ pageTitle }}</span>
+      </div>
+
       <!-- Right Section -->
       <div class="header-right">
         <!-- Notifications -->
-        <div class="header-item">
+        <div class="header-item" v-if="!isMobile || isDashboard">
           <button class="icon-button" @click="toggleNotifications" :aria-label="notificationCount > 0 ? notificationCount + ' unread notifications' : 'Notifications'">
             <Icon icon="ph:bell" />
             <span v-if="notificationCount > 0" class="notification-badge" aria-hidden="true">{{ notificationCount }}</span>
           </button>
         </div>
 
-        <!-- Messages -->
-        <div class="header-item">
-          <button class="icon-button" @click="toggleMessages" :aria-label="messageCount > 0 ? messageCount + ' unread messages' : 'Messages'">
-            <Icon icon="ph:chat-circle-dots" />
-            <span v-if="messageCount > 0" class="message-badge" aria-hidden="true">{{ messageCount }}</span>
-          </button>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="header-item">
-          <button class="icon-button" @click="showQuickActions">
-            <Icon icon="ph:plus" />
-          </button>
-        </div>
-
-        <!-- Language Switcher -->
-        <div class="header-item">
+        <!-- Language Switcher (Desktop Only) -->
+        <div class="header-item" v-if="!isMobile">
           <LanguageSwitcher />
         </div>
 
-        <!-- User Menu -->
+        <!-- User Menu / Profile -->
         <div class="header-item user-menu">
-          <button class="user-button" @click="toggleUserMenu">
-            <div class="user-avatar">
-              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User" />
+          <button class="user-button" @click="toggleUserMenu" :class="{ 'user-button--mobile': isMobile }">
+            <div class="user-avatar" :class="{ 'user-avatar--mobile': isMobile }">
+              <img v-if="authStore.user?.avatar" :src="authStore.user.avatar" alt="User" />
+              <div v-else class="avatar-fallback">{{ userInitials }}</div>
             </div>
-            <div class="user-info">
-              <div class="user-name">Agent Marie</div>
+            <div class="user-info" v-if="!isMobile">
+              <div class="user-name">{{ authStore.user?.name || 'Worker' }}</div>
               <div class="user-status">Online</div>
             </div>
-            <Icon icon="ph:caret-down" class="dropdown-icon" />
+            <Icon icon="ph:caret-down" class="dropdown-icon" v-if="!isMobile" />
           </button>
         </div>
       </div>
@@ -148,13 +138,25 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { Icon } from '@iconify/vue'
 import { useAuthStore } from '../../stores/auth.store'
 import LanguageSwitcher from './LanguageSwitcher.vue'
+import { useWindowSize } from '@vueuse/core'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
+const { width } = useWindowSize()
+
+const isMobile = computed(() => width.value <= 768)
+const isDashboard = computed(() => route.path === '/dashboard')
+const pageTitle = computed(() => (route.meta?.title as string) || 'Dashboard')
+
+const userInitials = computed(() => {
+  const name = authStore.user?.name || 'Worker'
+  return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+})
 
 // State
 const searchQuery = ref('')
@@ -274,14 +276,26 @@ document.addEventListener('click', (e) => {
 .app-header {
   position: fixed;
   top: 0;
-  left: 280px;
+  left: 272px; /* Sidebar width */
   right: 0;
   height: 72px;
   background: white;
   border-bottom: 1px solid #e5e7eb;
   z-index: 999;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    left: 0;
+    height: var(--mobile-header-height);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
 }
 
 .header-container {
@@ -299,6 +313,40 @@ document.addEventListener('click', (e) => {
   align-items: center;
   gap: 20px;
   flex: 1;
+}
+
+/* Mobile Specific */
+.header-center-mobile {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mobile-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.agruni-lettermark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.header-logo-mobile .agruni-lettermark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
 }
 
 .mobile-menu-toggle {
@@ -440,9 +488,9 @@ document.addEventListener('click', (e) => {
   transition: all 0.2s ease;
 }
 
-.user-button:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
+.user-button--mobile {
+  border: none;
+  padding: 4px;
 }
 
 .user-avatar {
@@ -450,6 +498,26 @@ document.addEventListener('click', (e) => {
   height: 32px;
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.user-avatar--mobile {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary-100);
+}
+
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-600);
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
 }
 
 .user-avatar img {
