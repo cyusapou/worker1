@@ -416,7 +416,7 @@ const submitForm = async () => {
 }
 
 const registerAnother = () => {
-  form.value = { firstName: '', lastName: '', phone: '', district: '', sector: '', cell: '', village: '', houseNumber: '', category: '' }
+  form.value = { firstName: '', lastName: '', phone: '', email: '', district: '', sector: '', cell: '', village: '', houseNumber: '', category: '' }
   currentStep.value = 0
   showSuccess.value = false
 }

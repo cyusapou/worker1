@@ -268,7 +268,7 @@ const fetchHouses = async () => {
   }
 }
 
-import { onMounted } from 'vue'
+
 onMounted(fetchHouses)
 
 const uniqueSectors = computed(() => {
