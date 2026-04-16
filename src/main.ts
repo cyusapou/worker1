@@ -5,6 +5,7 @@ import { MotionPlugin } from '@vueuse/motion'
 import i18n from './i18n'
 import App from './App.vue'
 import './assets/styles/tokens.css'
+import './assets/styles/responsive.css'
 
 // Import views
 import WorkerDashboard from './views/worker/WorkerDashboard.vue'

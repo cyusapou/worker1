@@ -848,13 +848,19 @@ document.addEventListener('click', (e) => {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .app-header {
     left: 0;
+    height: 56px;
+    background: linear-gradient(to bottom, #ffffff, #fafafa);
   }
   
   .header-container {
-    padding: 0 16px;
+    padding: 0 12px;
+  }
+  
+  .header-left {
+    gap: 8px;
   }
   
   .header-search {
@@ -865,25 +871,54 @@ document.addEventListener('click', (e) => {
     display: none;
   }
   
-  .dropdown {
-    right: -8px;
-    left: 8px;
-    min-width: 280px;
-  }
-}
-
-@media (max-width: 640px) {
-  .header-left {
-    gap: 12px;
-  }
-  
   .header-right {
-    gap: 4px;
+    gap: 2px;
   }
   
   .icon-button {
     width: 36px;
     height: 36px;
+    font-size: 18px;
+  }
+  
+  .dropdown {
+    right: -12px;
+    left: auto;
+    width: calc(100vw - 24px);
+    max-width: 360px;
+    top: calc(56px + 8px);
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0 8px;
+  }
+  
+  .header-left {
+    gap: 4px;
+  }
+  
+  .icon-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  .dropdown {
+    width: 100vw;
+    max-width: none;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    top: 56px;
+  }
+  
+  .notifications-list,
+  .messages-list {
+    max-height: 300px;
+    overflow-y: auto;
   }
 }
 </style>

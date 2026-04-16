@@ -1,0 +1,528 @@
+/* ============================================================
+   RESPONSIVE UTILITIES & MOBILE-FIRST REDESIGN SYSTEM
+   ============================================================
+   
+   This layer redesigns layouts per device, not just shrinks them.
+   Mobile-first approach: start at mobile, progressively enhance.
+*/
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE BASE (< 640px) — REDESIGNED LAYOUT
+   ════════════════════════════════════════════════════════════ */
+
+@media (max-width: 639px) {
+  /* ─── Layout ─── */
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .app-layout {
+    flex-direction: column;
+  }
+  
+  /* Sidebar hidden on mobile, drawer-based navigation */
+  .sidebar,
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80vw;
+    max-width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sidebar--mobile-open,
+  .app-sidebar--mobile-open {
+    left: 0;
+  }
+  
+  /* Main content takes full width */
+  .main-content {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  /* Header adjustment for mobile */
+  .app-header {
+    left: 0;
+    right: 0;
+    height: 56px;
+  }
+  
+  .header-container {
+    padding: 0 12px;
+  }
+  
+  /* Page content with proper mobile padding */
+  .page-content {
+    padding-top: 56px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+  
+  .content-wrapper {
+    padding: 12px;
+    max-width: 100%;
+  }
+  
+  /* ─── Typography ─── */
+  .page-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  .page-subtitle {
+    font-size: 13px;
+  }
+  
+  h1 { font-size: 20px; }
+  h2 { font-size: 18px; }
+  h3 { font-size: 16px; }
+  h4 { font-size: 14px; }
+  
+  /* ─── Spacing ─── */
+  .page-header {
+    margin-bottom: 16px;
+  }
+  
+  .page-header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* ─── Cards & Containers ─── */
+  .card {
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  /* ─── Buttons ─── */
+  button,
+  .btn {
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 14px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* ─── Forms ─── */
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* ─── Tables ─── */
+  table {
+    font-size: 13px;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+  }
+  
+  /* ─── Modals & Sheets ─── */
+  .modal,
+  .sheet {
+    border-radius: 16px 16px 0 0;
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  /* ─── Navigation ─── */
+  .breadcrumb-list {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  
+  .breadcrumb-item {
+    font-size: 12px;
+  }
+  
+  /* ─── Mobile Bottom Nav ─── */
+  .mobile-nav {
+    display: flex;
+  }
+  
+  .mobile-nav__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+  }
+  
+  .nav-item {
+    min-width: 0;
+    padding: 8px 4px;
+  }
+  
+  /* ─── Grid/Flex Layouts ─── */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* ─── Flex Utilities ─── */
+  .flex-row {
+    flex-direction: column;
+  }
+  
+  .gap-6 { gap: 12px; }
+  .gap-8 { gap: 12px; }
+  
+  /* ─── Display ─── */
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   TABLET (640px - 1023px) — INTERMEDIATE REDESIGN
+   ════════════════════════════════════════════════════════════ */
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* ─── Layout ─── */
+  body {
+    font-size: 15px;
+  }
+  
+  .sidebar,
+  .app-sidebar {
+    width: 72px; /* Icon-only sidebar on tablet */
+  }
+  
+  .main-content {
+    margin-left: 72px;
+  }
+  
+  .app-header {
+    left: 72px;
+  }
+  
+  .header-container {
+    padding: 0 16px;
+  }
+  
+  .content-wrapper {
+    padding: 16px;
+    max-width: 100%;
+  }
+  
+  /* ─── Typography ─── */
+  .page-title {
+    font-size: 22px;
+  }
+  
+  h1 { font-size: 22px; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 18px; }
+  
+  /* ─── Spacing ─── */
+  .page-header {
+    margin-bottom: 20px;
+  }
+  
+  .content-wrapper {
+    padding: 16px;
+  }
+  
+  /* ─── Grid/Flex ─── */
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* ─── Forms ─── */
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  /* ─── Tables ─── */
+  table {
+    font-size: 14px;
+  }
+  
+  /* ─── Display ─── */
+  .hide-tablet {
+    display: none !important;
+  }
+  
+  .show-tablet {
+    display: block !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   DESKTOP (1024px - 1279px) — STANDARD DESKTOP LAYOUT
+   ════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* ─── Layout ─── */
+  .sidebar,
+  .app-sidebar {
+    width: 240px;
+  }
+  
+  .main-content {
+    margin-left: 240px;
+  }
+  
+  .app-header {
+    left: 240px;
+  }
+  
+  .content-wrapper {
+    padding: 20px;
+    max-width: 1100px;
+  }
+  
+  /* ─── Grid/Flex ─── */
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* ─── Display ─── */
+  .mobile-nav {
+    display: none;
+  }
+  
+  .show-desktop {
+    display: block !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   LARGE DESKTOP (≥ 1280px) — FULL FEATURED LAYOUT
+   ════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1280px) {
+  /* ─── Layout ─── */
+  .sidebar,
+  .app-sidebar {
+    width: 272px;
+  }
+  
+  .main-content {
+    margin-left: 272px;
+  }
+  
+  .app-header {
+    left: 272px;
+  }
+  
+  .content-wrapper {
+    padding: 24px;
+    max-width: 1200px;
+  }
+  
+  /* ─── Grid/Flex ─── */
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  
+  /* ─── Typography ─── */
+  .page-title {
+    font-size: 28px;
+  }
+  
+  /* ─── Display ─── */
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE UTILITY CLASSES
+   ════════════════════════════════════════════════════════════ */
+
+/* Show/Hide utilities */
+.hide-mobile { display: none; }
+.hide-tablet { display: none; }
+.hide-desktop { display: none; }
+
+@media (min-width: 640px) {
+  .hide-mobile { display: block; }
+  .show-mobile { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .hide-tablet { display: block; }
+  .show-tablet { display: none; }
+  .hide-desktop { display: none; }
+  .show-desktop { display: block; }
+}
+
+/* Text sizing */
+.text-mobile-sm { font-size: 13px; }
+.text-mobile-base { font-size: 14px; }
+.text-mobile-lg { font-size: 15px; }
+
+@media (min-width: 1024px) {
+  .text-mobile-sm { font-size: 12px; }
+  .text-mobile-base { font-size: 14px; }
+  .text-mobile-lg { font-size: 16px; }
+}
+
+/* Spacing utilities */
+.px-mobile { padding-left: 12px; padding-right: 12px; }
+.py-mobile { padding-top: 12px; padding-bottom: 12px; }
+
+@media (min-width: 1024px) {
+  .px-mobile { padding-left: 24px; padding-right: 24px; }
+  .py-mobile { padding-top: 24px; padding-bottom: 24px; }
+}
+
+/* Container queries for responsive cards */
+.card-responsive {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .card-responsive {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-responsive {
+    gap: 20px;
+  }
+}
+
+/* Prevent layout shift */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Ensure tables scroll on mobile */
+table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 639px) {
+  .table-wrapper {
+    overflow-x: auto;
+    margin: 0 -12px;
+    padding: 0 12px;
+  }
+  
+  table {
+    min-width: 100%;
+  }
+}
+
+/* Safe area adjustments for notched devices */
+@supports (padding: max(0px)) {
+  .app-layout {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  
+  .page-content {
+    padding-top: max(56px, calc(56px + env(safe-area-inset-top)));
+    padding-bottom: max(72px, calc(72px + env(safe-area-inset-bottom)));
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .sidebar,
+  .app-sidebar,
+  .app-header,
+  .mobile-nav {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .page-content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
