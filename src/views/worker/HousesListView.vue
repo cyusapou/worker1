@@ -1,12 +1,6 @@
 <template>
   <div class="houses-page">
-    <!-- Page Header -->
-    <div class="page-top">
-      <div class="page-top-left">
-        <h2 class="section-title">All Houses</h2>
-        <span class="house-count">{{ filteredHouses.length }} customers</span>
-      </div>
-      <div class="page-top-right">
+    <!-- Page Header -->    <div class=\"page-top\">      <div class="page-top-right">
         <div class="search-box">
           <Icon icon="ph:magnifying-glass" class="search-icon" />
           <input

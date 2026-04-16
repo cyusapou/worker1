@@ -1,10 +1,5 @@
 <template>
   <div class="profile-view">
-    <div class="profile-view__header">
-      <h1>Profile</h1>
-      <p>Manage your account settings</p>
-    </div>
-    
     <div class="profile-view__content">
       <BaseCard variant="elevated" padding="lg">
         <div class="profile-section">

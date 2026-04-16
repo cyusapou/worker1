@@ -11,40 +11,6 @@
       <!-- Page Content -->
       <main class="page-content">
         <div class="content-wrapper">
-          <!-- Page Header (Center align on mobile) -->
-          <div class="page-header" :class="{ 'page-header--mobile-hidden': isDashboard && isMobile }">
-            <div class="page-header-content">
-              <div class="page-title-section">
-                <h1 class="page-title">{{ pageTitle }}</h1>
-                <p v-if="pageSubtitle" class="page-subtitle">{{ pageSubtitle }}</p>
-              </div>
-              <div class="page-actions">
-                <slot name="page-actions"></slot>
-              </div>
-            </div>
-            
-            <!-- Breadcrumb -->
-            <nav v-if="breadcrumbs.length > 0" class="breadcrumb-nav">
-              <ol class="breadcrumb-list">
-                <li v-for="(crumb, index) in breadcrumbs" :key="index" class="breadcrumb-item">
-                  <router-link 
-                    v-if="crumb.to" 
-                    :to="crumb.to" 
-                    class="breadcrumb-link"
-                  >
-                    {{ crumb.label }}
-                  </router-link>
-                  <span v-else class="breadcrumb-text">{{ crumb.label }}</span>
-                  <Icon 
-                    v-if="index < breadcrumbs.length - 1" 
-                    icon="ph:caret-right" 
-                    class="breadcrumb-separator"
-                  />
-                </li>
-              </ol>
-            </nav>
-          </div>
-
           <!-- Page Content -->
           <div class="page-body">
             <slot></slot>
@@ -70,17 +36,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { Icon } from '@iconify/vue'
 import AppSidebar from './AppSidebar.vue'
 import AppHeader from './AppHeader.vue'
 import MobileNav from './MobileNav.vue'
 import { useSync } from '../../composables/useSync'
 import { useWindowSize } from '@vueuse/core'
-
-interface Breadcrumb {
-  label: string
-  to?: string
-}
 
 const route = useRoute()
 const isMobileMenuOpen = ref(false)
@@ -96,36 +56,6 @@ useSync()
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
-
-// Page metadata
-const pageTitle = computed(() => {
-  const title = route.meta?.title as string
-  return title || 'Dashboard'
-})
-
-const pageSubtitle = computed(() => {
-  return route.meta?.subtitle as string
-})
-
-const breadcrumbs = computed<Breadcrumb[]>(() => {
-  const crumbs: Breadcrumb[] = [
-    { label: 'Home', to: '/dashboard' }
-  ]
-  
-  const pathSegments = route.path.split('/').filter(Boolean)
-  let currentPath = ''
-  
-  pathSegments.forEach(segment => {
-    currentPath += `/${segment}`
-    const label = segment.charAt(0).toUpperCase() + segment.slice(1)
-    crumbs.push({
-      label,
-      to: currentPath === route.path ? undefined : currentPath
-    })
-  })
-  
-  return crumbs
-})
 
 // Methods
 const closeMobileMenu = () => {
@@ -182,104 +112,6 @@ onUnmounted(() => {
   padding: 16px;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-/* Page Header */
-.page-header {
-  margin-bottom: 24px;
-}
-
-.page-header--mobile-hidden {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .page-header {
-    text-align: center;
-    margin-top: 8px;
-  }
-  
-  .page-header--mobile-hidden {
-    display: none;
-  }
-}
-
-.page-header-content {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.page-title-section {
-  flex: 1;
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.2;
-  margin: 0 0 4px 0;
-}
-
-.page-subtitle {
-  font-size: 14px;
-  color: #64748b;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.page-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* Breadcrumb */
-.breadcrumb-nav {
-  margin-top: 16px;
-}
-
-.breadcrumb-list {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.breadcrumb-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.breadcrumb-link {
-  color: #64748b;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.breadcrumb-link:hover {
-  color: #3b82f6;
-}
-
-.breadcrumb-text {
-  color: #1e293b;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.breadcrumb-separator {
-  color: #cbd5e1;
-  width: 16px;
-  height: 16px;
 }
 
 /* Page Body */

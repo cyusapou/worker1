@@ -1,10 +1,5 @@
 <template>
   <div class="announce-page">
-    <div class="page-top">
-      <div><h2>Announcements</h2><span class="sub">Send notices to your customers</span></div>
-      <button class="new-btn" @click="showForm = true" v-if="!showForm"><Icon icon="ph:plus" /> New Announcement</button>
-    </div>
-
     <!-- Compose Form -->
     <div v-if="showForm" class="compose-card">
       <div class="compose-header"><Icon icon="ph:megaphone-simple" /><h3>Compose Announcement</h3></div>
