@@ -356,7 +356,7 @@ import { useAuthStore } from '../../stores/auth.store'
 
 const authStore = useAuthStore()
 const workerId = computed(() => authStore.user?.id)
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 
 // ── Date ──
 const todayFormatted = new Date().toLocaleDateString('en-US', {
